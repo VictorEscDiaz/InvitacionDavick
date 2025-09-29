@@ -6,143 +6,443 @@
   <title>Registro de Colores</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 40px auto;
-      background: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    h1 { text-align: center; color: #333; }
+    .container {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-top: 20px;
+    }
+    h1 { 
+      text-align: center; 
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .info-box {
+      background: #e8f5e8;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .color-status {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .color-item {
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      border: 2px solid;
+    }
+    .available { 
+      background: #d4edda; 
+      color: #155724; 
+      border-color: #c3e6cb;
+    }
+    .limited { 
+      background: #fff3cd; 
+      color: #856404; 
+      border-color: #ffeaa7;
+    }
+    .full { 
+      background: #f8d7da; 
+      color: #721c24; 
+      border-color: #f5c6cb;
+    }
     form {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 15px;
+      margin-bottom: 30px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
     }
-    label { font-weight: bold; }
+    label { 
+      font-weight: bold;
+      color: #333;
+    }
     input, select, button {
-      padding: 8px;
+      padding: 12px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 2px solid #ddd;
       font-size: 16px;
+      transition: all 0.3s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
     }
     button {
-      background-color: #4CAF50;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
       color: white;
       border: none;
       cursor: pointer;
-      transition: background 0.3s;
+      font-weight: bold;
+      margin-top: 10px;
     }
-    button:hover { background-color: #45a049; }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    }
+    button:disabled {
+      background: #cccccc;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       background: white;
+      margin-top: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     th, td {
-      padding: 8px;
+      padding: 12px 15px;
       text-align: center;
-      border: 1px solid #ccc;
+      border-bottom: 1px solid #ddd;
     }
     th {
-      background: #4CAF50;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
       color: white;
+      font-weight: bold;
+    }
+    tr:hover {
+      background: #f5f5f5;
+    }
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+    .success { 
+      background: #d4edda; 
+      color: #155724; 
+      border: 2px solid #c3e6cb;
+    }
+    .error { 
+      background: #f8d7da; 
+      color: #721c24; 
+      border: 2px solid #f5c6cb;
+    }
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .back-btn {
+      display: inline-block;
+      background: #6c757d;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <h1>Registro de Colores</h1>
+  <a href="index.html" class="back-btn">← Volver a la Invitación</a>
+  
+  <div class="container">
+    <h1>🎨 Registro de Colores</h1>
+    <p class="subtitle">¡Elige tu color para la fiesta! Máximo 2 personas por color.</p>
 
-  <form id="form">
-    <label>Nombre:</label>
-    <input name="nombre" required />
+    <div class="info-box">
+      <strong>✨ Instrucciones:</strong> Selecciona tu nombre y color favorito. Cada color puede ser elegido por máximo 2 personas.
+    </div>
 
-    <label>Color:</label>
-    <select name="color" required>
-      <option value="">Selecciona un color</option>
-      <option value="Rojo">Rojo</option>
-      <option value="Verde">Verde</option>
-      <option value="Azul">Azul</option>
-      <option value="Amarillo">Amarillo</option>
-      <option value="Morado">Morado</option>
-    </select>
+    <form id="form">
+      <div>
+        <label for="nombre">👤 Tu Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ej: María González">
+      </div>
 
-    <button type="submit">Registrar</button>
-  </form>
+      <div>
+        <label for="color">🎨 Elige tu Color:</label>
+        <select id="color" name="color" required>
+          <option value="">-- Selecciona un color --</option>
+          <option value="Rojo">🔴 Rojo</option>
+          <option value="Verde">🟢 Verde</option>
+          <option value="Azul">🔵 Azul</option>
+          <option value="Amarillo">🟡 Amarillo</option>
+          <option value="Morado">🟣 Morado</option>
+          <option value="Naranja">🟠 Naranja</option>
+          <option value="Rosa">🌸 Rosa</option>
+        </select>
+      </div>
 
-  <h2>Registros actuales</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Color</th>
-      </tr>
-    </thead>
-    <tbody id="tablaRegistros">
-      <tr><td colspan="2">Cargando...</td></tr>
-    </tbody>
-  </table>
+      <button type="submit" id="submitBtn">✅ Registrar Mi Color</button>
+    </form>
+
+    <div id="message"></div>
+
+    <div id="colorStatus">
+      <h3>📊 Estado de Colores:</h3>
+      <div class="color-status" id="colorStatusContainer">
+        Cargando...
+      </div>
+    </div>
+
+    <h2>👥 Confirmados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Color</th>
+        </tr>
+      </thead>
+      <tbody id="tablaRegistros">
+        <tr><td colspan="2">Cargando registros...</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwfs-rq79RZ-uMW1IKa5_dfx8nGTS1p8VYPNr7T5It0I9FPNA03LZFnXIsgp154D3TS/exec';
+    // 🔹 CONFIGURACIÓN DE SUPABASE
+    const SUPABASE_URL = 'https://iphjrotufqljtvuwucko.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwaGpyb3R1ZnFsanR2dXd1Y2tvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNjUxMTksImV4cCI6MjA3NDc0MTExOX0.3hKzvsta-1PZh-vU4IKG8s4zz-2vic43FwPjcy7eU84';
+    
     const form = document.getElementById('form');
     const tabla = document.getElementById('tablaRegistros');
+    const colorStatusContainer = document.getElementById('colorStatusContainer');
+    const colorSelect = document.getElementById('color');
+    const submitBtn = document.getElementById('submitBtn');
+    const messageDiv = document.getElementById('message');
 
-    // 🔹 Función para cargar los registros
+    let conteoColores = {};
+    let todosLosInvitados = [];
+
+    // 🔹 Función para mostrar mensajes
+    function showMessage(text, type = 'success') {
+      messageDiv.innerHTML = `<div class="message ${type}">${text}</div>`;
+      setTimeout(() => {
+        messageDiv.innerHTML = '';
+      }, 5000);
+    }
+
+    // 🔹 Cargar todos los registros
     async function cargarRegistros() {
-      tabla.innerHTML = '<tr><td colspan="2">Cargando...</td></tr>';
       try {
-        const res = await fetch(scriptURL);
-        const data = await res.json();
-        const registros = data.registros || [];
+        tabla.innerHTML = '<tr><td colspan="2">Cargando...</td></tr>';
+        
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/invitados?select=*&order=created_at.desc`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        });
 
+        if (!response.ok) throw new Error('Error al cargar datos');
+
+        const registros = await response.json();
+        todosLosInvitados = registros;
+
+        // Calcular conteo de colores
+        conteoColores = {};
+        registros.forEach(invitado => {
+          conteoColores[invitado.color] = (conteoColores[invitado.color] || 0) + 1;
+        });
+
+        // Actualizar tabla
         if (registros.length === 0) {
-          tabla.innerHTML = '<tr><td colspan="2">Sin registros</td></tr>';
-          return;
+          tabla.innerHTML = '<tr><td colspan="2">🎉 ¡Sé el primero en registrarse!</td></tr>';
+        } else {
+          tabla.innerHTML = registros.map(invitado => `
+            <tr>
+              <td>👤 ${invitado.nombre}</td>
+              <td><strong>${invitado.color}</strong></td>
+            </tr>
+          `).join('');
         }
 
-        tabla.innerHTML = registros.map(r => `
-          <tr>
-            <td>${r.nombre}</td>
-            <td>${r.color}</td>
-          </tr>
-        `).join('');
-      } catch (err) {
-        tabla.innerHTML = `<tr><td colspan="2">Error al cargar: ${err.message}</td></tr>`;
+        // Actualizar estados
+        actualizarEstadoColores();
+        actualizarOpcionesColor();
+
+      } catch (error) {
+        console.error('Error:', error);
+        tabla.innerHTML = '<tr><td colspan="2">❌ Error al cargar datos. Recarga la página.</td></tr>';
+        showMessage('Error al cargar los registros', 'error');
       }
     }
 
-    // 🔹 Función para enviar el formulario
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = {
-        nombre: formData.get('nombre'),
-        color: formData.get('color')
-      };
-
+    // 🔹 Registrar nuevo invitado
+    async function registrarInvitado(nombre, color) {
       try {
-        const res = await fetch(scriptURL, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/invitados`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify({
+            nombre: nombre,
+            color: color
+          })
         });
 
-        const result = await res.json();
-        alert(result.msg);
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Error al registrar');
+        }
 
-        form.reset(); // limpiar el formulario
-        await cargarRegistros(); // actualizar la tabla
-      } catch (err) {
-        alert("❌ Error al enviar: " + err.message);
+        const nuevoRegistro = await response.json();
+        return { success: true, data: nuevoRegistro };
+      } catch (error) {
+        console.error('Error:', error);
+        return { success: false, error: error.message };
+      }
+    }
+
+    // 🔹 Actualizar estado visual de colores
+    function actualizarEstadoColores() {
+      const colores = ['Rojo', 'Verde', 'Azul', 'Amarillo', 'Morado', 'Naranja', 'Rosa'];
+      
+      colorStatusContainer.innerHTML = colores.map(color => {
+        const count = conteoColores[color] || 0;
+        let estado = 'available';
+        let texto = 'Disponible';
+        let emoji = '✅';
+        
+        if (count === 1) {
+          estado = 'limited';
+          texto = '1 persona';
+          emoji = '⚠️';
+        } else if (count >= 2) {
+          estado = 'full';
+          texto = 'Lleno';
+          emoji = '❌';
+        }
+        
+        return `
+          <div class="color-item ${estado}">
+            <div>${getColorEmoji(color)} ${color}</div>
+            <div>${emoji} ${texto}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 🔹 Obtener emoji para cada color
+    function getColorEmoji(color) {
+      const emojis = {
+        'Rojo': '🔴',
+        'Verde': '🟢',
+        'Azul': '🔵',
+        'Amarillo': '🟡',
+        'Morado': '🟣',
+        'Naranja': '🟠',
+        'Rosa': '🌸'
+      };
+      return emojis[color] || '🎨';
+    }
+
+    // 🔹 Actualizar opciones del select
+    function actualizarOpcionesColor() {
+      const options = colorSelect.options;
+      
+      for (let i = 1; i < options.length; i++) {
+        const color = options[i].value;
+        const count = conteoColores[color] || 0;
+        
+        if (count >= 2) {
+          options[i].disabled = true;
+          options[i].text = `${getColorEmoji(color)} ${color} ❌ (LLENO)`;
+        } else {
+          options[i].disabled = false;
+          options[i].text = `${getColorEmoji(color)} ${color}`;
+        }
+      }
+    }
+
+    // 🔹 Manejar envío del formulario
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const nombre = formData.get('nombre').trim();
+      const color = formData.get('color');
+
+      if (!nombre || !color) {
+        showMessage('❌ Por favor completa todos los campos', 'error');
+        return;
+      }
+
+      // Verificar si el color ya está lleno
+      const count = conteoColores[color] || 0;
+      if (count >= 2) {
+        showMessage(`❌ El color ${color} ya está lleno. ¡Elige otro color!`, 'error');
+        return;
+      }
+
+      // Verificar si el nombre ya existe
+      const nombreExiste = todosLosInvitados.some(invitado => 
+        invitado.nombre.toLowerCase() === nombre.toLowerCase()
+      );
+      
+      if (nombreExiste) {
+        showMessage('❌ Este nombre ya está registrado. ¿Eres otra persona?', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Registrando...';
+
+      try {
+        const resultado = await registrarInvitado(nombre, color);
+        
+        if (resultado.success) {
+          showMessage(`🎉 ¡Registro exitoso! <strong>${nombre}</strong> - <strong>${color}</strong>`, 'success');
+          form.reset();
+          await cargarRegistros(); // Recargar datos
+        } else {
+          showMessage(`❌ Error: ${resultado.error}`, 'error');
+        }
+      } catch (error) {
+        showMessage('❌ Error de conexión. Intenta nuevamente.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '✅ Registrar Mi Color';
       }
     });
 
     // Cargar registros al iniciar
     cargarRegistros();
+
+    // Actualizar cada 30 segundos
+    setInterval(cargarRegistros, 30000);
   </script>
 </body>
 </html>
