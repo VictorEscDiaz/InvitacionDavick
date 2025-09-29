@@ -1,111 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Colores</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1e1e1e;
-      color: #fff;
-      text-align: center;
-      padding: 40px;
+      max-width: 500px;
+      margin: 40px auto;
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .card {
-      background: rgba(255,255,255,0.1);
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin: auto;
+    h1 { text-align: center; color: #333; }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
     }
-    select, input, button {
-      padding: 10px;
-      margin: 10px;
+    label { font-weight: bold; }
+    input, select, button {
+      padding: 8px;
       border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-    }
-    input {
-      width: 80%;
+      border: 1px solid #ccc;
+      font-size: 16px;
     }
     button {
-      background: #ffde59;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
       cursor: pointer;
+      transition: background 0.3s;
     }
-    button:hover {
-      background: #ffe47a;
+    button:hover { background-color: #45a049; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
     }
-    ul {
-      text-align: left;
-      max-width: 300px;
-      margin: 20px auto;
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #4CAF50;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Elige tu color</h1>
-    <input type="text" id="nombre" placeholder="Tu nombre"><br>
-    <select id="colorSelect">
-      <option value="">-- Selecciona un color --</option>
-      <option value="Negro">Negro</option>
-      <option value="Rojo">Rojo</option>
-      <option value="Azul">Azul</option>
-      <option value="Verde">Verde</option>
-      <option value="Amarillo">Amarillo</option>
-      <option value="Blanco">Blanco</option>
-    </select><br>
-    <button onclick="registrar()">Registrar</button>
+  <h1>Registro de Colores</h1>
 
-    <h2>Colores ocupados:</h2>
-    <ul id="lista"></ul>
-  </div>
+  <form id="form">
+    <label>Nombre:</label>
+    <input name="nombre" required />
+
+    <label>Color:</label>
+    <select name="color" required>
+      <option value="">Selecciona un color</option>
+      <option value="Rojo">Rojo</option>
+      <option value="Verde">Verde</option>
+      <option value="Azul">Azul</option>
+      <option value="Amarillo">Amarillo</option>
+      <option value="Morado">Morado</option>
+    </select>
+
+    <button type="submit">Registrar</button>
+  </form>
+
+  <h2>Registros actuales</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Color</th>
+      </tr>
+    </thead>
+    <tbody id="tablaRegistros">
+      <tr><td colspan="2">Cargando...</td></tr>
+    </tbody>
+  </table>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycby7tAHvi8sNOZ27CG9lpjJXiutQ7bmOeTOx8mXuP41GG00yUVEroDd_kY4ea-cg0fLS/exec";
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxxYqA_6JX8Qk-Lrt9Difzx9oRGQg-0beCkLfviWffk9x3R9Fg0zvRIrZvwiEXBWlQJ/exec';
+    const form = document.getElementById('form');
+    const tabla = document.getElementById('tablaRegistros');
 
+    // 🔹 Función para cargar los registros
     async function cargarRegistros() {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      const lista = document.getElementById("lista");
-      const select = document.getElementById("colorSelect");
+      tabla.innerHTML = '<tr><td colspan="2">Cargando...</td></tr>';
+      try {
+        const res = await fetch(scriptURL);
+        const data = await res.json();
+        const registros = data.registros || [];
 
-      lista.innerHTML = "";
-      Array.from(select.options).forEach(opt => {
-        if (opt.value !== "") opt.disabled = false; // reactivar
-      });
+        if (registros.length === 0) {
+          tabla.innerHTML = '<tr><td colspan="2">Sin registros</td></tr>';
+          return;
+        }
 
-      data.forEach(r => {
-        let li = document.createElement("li");
-        li.textContent = `${r.nombre} - ${r.color}`;
-        lista.appendChild(li);
-
-        // Deshabilitar color ya ocupado
-        Array.from(select.options).forEach(opt => {
-          if (opt.value === r.color) opt.disabled = true;
-        });
-      });
-    }
-
-    async function registrar() {
-      const nombre = document.getElementById("nombre").value.trim();
-      const color = document.getElementById("colorSelect").value;
-
-      if (!nombre || !color) {
-        alert("Escribe tu nombre y selecciona un color");
-        return;
+        tabla.innerHTML = registros.map(r => `
+          <tr>
+            <td>${r.nombre}</td>
+            <td>${r.color}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tabla.innerHTML = `<tr><td colspan="2">Error al cargar: ${err.message}</td></tr>`;
       }
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ nombre, color })
-      });
-      const data = await res.json();
-
-      alert(data.msg);
-      cargarRegistros();
     }
 
+    // 🔹 Función para enviar el formulario
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {
+        nombre: formData.get('nombre'),
+        color: formData.get('color')
+      };
+
+      try {
+        const res = await fetch(scriptURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        alert(result.msg);
+
+        form.reset(); // limpiar el formulario
+        await cargarRegistros(); // actualizar la tabla
+      } catch (err) {
+        alert("❌ Error al enviar: " + err.message);
+      }
+    });
+
+    // Cargar registros al iniciar
     cargarRegistros();
   </script>
 </body>
