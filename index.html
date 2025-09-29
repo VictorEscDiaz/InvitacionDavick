@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Invitación Musical</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      max-width: 500px;
+      margin: auto;
+      backdrop-filter: blur(6px);
+    }
+    h1 { font-size: 2.8rem; margin-bottom: 10px; color: #ffde59; }
+    h2 { font-size: 1.6rem; margin: 10px 0; color: #ff9a8b; }
+    p { font-size: 1.1rem; margin: 8px 0; }
+    .btn {
+      display: inline-block;
+      background: #ffde59;
+      color: #333;
+      padding: 12px 25px;
+      margin-top: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+    .btn:hover { background: #ffe47a; }
+    footer { margin-top: 30px; font-size: 0.9rem; opacity: 0.7; }
+    .note { position: absolute; font-size: 2rem; animation: float 10s linear infinite; opacity: 0.6; color: #ffde59; }
+    @keyframes float {
+      from { transform: translateY(100vh) rotate(0deg); opacity: 0.8; }
+      to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Notas musicales -->
+  <div class="note" style="left:10%; animation-duration: 12s;">♪</div>
+  <div class="note" style="left:30%; animation-duration: 9s;">♫</div>
+  <div class="note" style="left:50%; animation-duration: 14s;">♬</div>
+  <div class="note" style="left:70%; animation-duration: 11s;">♩</div>
+  <div class="note" style="left:85%; animation-duration: 13s;">♪</div>
+
+  <div class="card">
+    <h1>¡Estás Invitado!</h1>
+    <h2>Fiesta Musical de Cumpleaños</h2>
+    <p><strong>Fecha:</strong> Sábado 12 de Octubre, 8:00 PM</p>
+    <p><strong>Lugar:</strong> Casa de Víctor, Av. Principal #123</p>
+    <p>Una noche de buena música, baile y diversión. ¡No faltes!</p>
+    <a href="colores.html" class="btn">Registrar Color</a>
+  </div>
+  
+  <footer>Confirma tu asistencia antes del 10 de Octubre.</footer>
+</body>
+</html>
