@@ -173,10 +173,10 @@
   
   <div class="container">
     <h1>🎨 Registro de Colores</h1>
-    <p class="subtitle">¡Elige tu color para la fiesta! Máximo 2 personas por color.</p>
+    <p class="subtitle">¡Elige tu color para la fiesta! Máximo 3 personas por color.</p>
 
     <div class="info-box">
-      <strong>✨ Instrucciones:</strong> Selecciona tu nombre y color favorito. Cada color puede ser elegido por máximo 2 personas.
+      <strong>✨ Instrucciones:</strong> Selecciona tu nombre y color favorito. Cada color puede ser elegido por máximo 3 personas.
     </div>
 
     <form id="form">
@@ -196,6 +196,10 @@
           <option value="Morado">🟣 Morado</option>
           <option value="Naranja">🟠 Naranja</option>
           <option value="Rosa">🌸 Rosa</option>
+          <!-- NUEVOS COLORES -->
+          <option value="Negro">⚫ Negro</option>
+          <option value="Blanco">⚪ Blanco</option>
+          <option value="Cafe">🟤 Café</option>
         </select>
       </div>
 
@@ -326,9 +330,22 @@
       }
     }
 
+    // 🔹 Obtener emoji para cada color
+    function getColorEmoji(color) {
+      const emojis = {
+        'Rojo': '🔴', 'Verde': '🟢', 'Azul': '🔵', 
+        'Amarillo': '🟡', 'Morado': '🟣', 'Naranja': '🟠', 
+        'Rosa': '🌸', 'Negro': '⚫', 'Blanco': '⚪', 'Cafe': '🟤'
+      };
+      return emojis[color] || '🎨';
+    }
+
     // 🔹 Actualizar estado visual de colores
     function actualizarEstadoColores() {
-      const colores = ['Rojo', 'Verde', 'Azul', 'Amarillo', 'Morado', 'Naranja', 'Rosa'];
+      const colores = [
+        'Rojo', 'Verde', 'Azul', 'Amarillo', 'Morado', 
+        'Naranja', 'Rosa', 'Negro', 'Blanco', 'Cafe'
+      ];
       
       colorStatusContainer.innerHTML = colores.map(color => {
         const count = conteoColores[color] || 0;
@@ -336,11 +353,11 @@
         let texto = 'Disponible';
         let emoji = '✅';
         
-        if (count === 1) {
+        if (count === 1 || count === 2) {
           estado = 'limited';
-          texto = '1 persona';
+          texto = `${count} personas`;
           emoji = '⚠️';
-        } else if (count >= 2) {
+        } else if (count >= 3) {  // ← LÍMITE CAMBIADO A 3
           estado = 'full';
           texto = 'Lleno';
           emoji = '❌';
@@ -355,20 +372,6 @@
       }).join('');
     }
 
-    // 🔹 Obtener emoji para cada color
-    function getColorEmoji(color) {
-      const emojis = {
-        'Rojo': '🔴',
-        'Verde': '🟢',
-        'Azul': '🔵',
-        'Amarillo': '🟡',
-        'Morado': '🟣',
-        'Naranja': '🟠',
-        'Rosa': '🌸'
-      };
-      return emojis[color] || '🎨';
-    }
-
     // 🔹 Actualizar opciones del select
     function actualizarOpcionesColor() {
       const options = colorSelect.options;
@@ -377,7 +380,7 @@
         const color = options[i].value;
         const count = conteoColores[color] || 0;
         
-        if (count >= 2) {
+        if (count >= 3) {  // ← LÍMITE CAMBIADO A 3
           options[i].disabled = true;
           options[i].text = `${getColorEmoji(color)} ${color} ❌ (LLENO)`;
         } else {
@@ -400,9 +403,9 @@
         return;
       }
 
-      // Verificar si el color ya está lleno
+      // Verificar si el color ya está lleno - LÍMITE CAMBIADO A 3
       const count = conteoColores[color] || 0;
-      if (count >= 2) {
+      if (count >= 3) {
         showMessage(`❌ El color ${color} ya está lleno. ¡Elige otro color!`, 'error');
         return;
       }
