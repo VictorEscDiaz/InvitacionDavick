@@ -126,6 +126,28 @@
       box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
     }
 
+    .karaoke-section {
+      background: linear-gradient(135deg, rgba(148, 0, 211, 0.2), rgba(75, 0, 130, 0.2));
+      border: 2px solid rgba(148, 0, 211, 0.4);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .karaoke-title {
+      color: #da70d6;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .karaoke-text {
+      font-size: 1rem;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
     footer {
       margin-top: 20px;
       font-size: 1rem;
@@ -206,6 +228,14 @@
       .note {
         font-size: 2rem;
       }
+      
+      .karaoke-title {
+        font-size: 1.2rem;
+      }
+      
+      .karaoke-text {
+        font-size: 0.95rem;
+      }
     }
 
     @media (max-width: 360px) {
@@ -261,13 +291,13 @@
         <div class="detail-item">
           <span class="emoji">📅</span>
           <strong>Fecha:</strong>
-          <span>Sábado 4 de Octubre, 3:00 PM</span>
+          <span>Sábado 4 de Octubre, 8:00 PM</span>
         </div>
         
         <div class="detail-item">
           <span class="emoji">📍</span>
           <strong>Lugar:</strong>
-          <span>Isabel la Católica 1025, Col. Niños Heroes de Chapultepec, Del. Benito Juárez</span>
+          <span>Isabel la Católica 1025, Benito Juárez</span>
         </div>
       </div>
 
@@ -278,6 +308,16 @@
       >
         📍 Abrir ubicación en Maps
       </a>
+
+      <!-- Nueva sección de Karaoke -->
+      <div class="karaoke-section">
+        <div class="karaoke-title">🎤 ¡Noche de Karaoke! 🎤</div>
+        <div class="karaoke-text">
+          Prepara tu mejor imitación de tu artista favorito. 
+          <br>Si quieres traer algo para caracterizarte ¡eres bienvenido! 
+          <br>Pero con imitarlo cantando ¡está perfecto! 🎶
+        </div>
+      </div>
 
       <p style="font-size: 1.1rem; margin: 20px 0; line-height: 1.5;">
         🎊 Una noche increíble de música, baile, colores y diversión. 
